@@ -1,0 +1,10 @@
+{
+  "properties": {
+    "_id": {"type": "string"},
+    "username": {"type": "string"},
+    "email": {"type": "string"},
+    "name": {"type": "string"},
+    "surname": {"type": "string"}
+  },
+  "required": ["_id", "username", "email", "name", "surname"]
+}
