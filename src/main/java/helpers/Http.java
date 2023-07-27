@@ -63,20 +63,6 @@ public class Http {
         return allPlayersInfoGET(getGuestToken());
     }
 
-    public static Response requestPlayersPOSTResponse(String authToken, Map<String, String> body) {
-        System.out.println("Making POST request to " + Constants.PLAYERS_REQUEST_PATH + " with " + body + " \nand token " + authToken);
-        Response response = requestSpec
-                .auth()
-                .preemptive()
-                .oauth2(authToken)
-                .contentType(ContentType.JSON)
-                .body(body)
-                .when()
-                .post(Constants.PLAYERS_REQUEST_PATH);
-        System.out.println("requestPlayersPOST - " + response.asPrettyString());
-        return response;
-    }
-
     public static ValidatableResponse requestPlayerDELETE(String authToken, String id) {
         System.out.println("Making DELETE request to " + PLAYER_DELETE_PATH + " with " + id + " \nand token " + authToken);
         ValidatableResponse response = requestSpec
@@ -118,7 +104,7 @@ public class Http {
     }
 
     public static Response registerNewPlayer(Map<String, String> optionalFields) {
-        //Создает нового пользователя и возвращает его username
+        //Создает нового пользователя и возвращает Response
         System.out.println("Creating new player");
         String username = DataGenerator.generateRandomUsername("tester");
         Map<String, String> newPlayerInfo = new java.util.HashMap<>(Map.of(

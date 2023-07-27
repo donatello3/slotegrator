@@ -90,8 +90,8 @@ public class APITestCases extends TestCase {
     @DisplayName("Получить токен пользователя")
     public void clientCredentialsGrantTest() {
         ValidatableResponse response = Http.requestTokenPOST(Map.of(
-                EMAIL_JSON, "daniel.bautista.oleynik@gmail.com",
-                PASSWORD_JSON, "IKUSJWZ5zqjT"
+                EMAIL_JSON, TOKEN_AUTH_USERNAME,
+                PASSWORD_JSON, TOKEN_AUTH_PASSWORD
         ));
         response.statusCode(201);
         response.body(ACCESS_TOKEN_JSON, not(empty()));
