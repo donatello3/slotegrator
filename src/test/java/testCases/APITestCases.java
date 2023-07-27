@@ -20,6 +20,8 @@ import java.util.stream.Stream;
 
 public class APITestCases extends TestCase {
 
+    Comparator<GetPlayerInfoDTO> comparator = Comparator.nullsLast(Comparator.comparing(GetPlayerInfoDTO::getName, Comparator.nullsLast(Comparator.naturalOrder())));
+
     static Stream<Map<String, String>> optionalFields() {
         //Необязательные поля при создании игрока
         return Stream.of(
@@ -134,20 +136,7 @@ public class APITestCases extends TestCase {
         ValidatableResponse response = Http.allPlayersInfoGET();
         response.statusCode(200);
         List<GetPlayerInfoDTO> resultList = Arrays.asList(response.extract().as(GetPlayerInfoDTO[].class));
-        resultList.sort(new Comparator<GetPlayerInfoDTO>() {
-            @Override
-            public int compare(GetPlayerInfoDTO o1, GetPlayerInfoDTO o2) {
-                if (o1.getName() == null && o2.getName() == null) {
-                    return 0;
-                } else if (o1.getName() == null) {
-                    return -1;
-                } else if (o2.getName() == null) {
-                    return 1;
-                } else {
-                    return o1.getName().compareTo(o2.getName());
-                }
-            }
-        });
+        resultList.sort(comparator);
 
         for (GetPlayerInfoDTO playerInfo : resultList) {
             System.out.println("Player id=" + playerInfo.getId() + ", name=" + playerInfo.getName());
